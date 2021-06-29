@@ -1,0 +1,14 @@
+<!-- 
+  scroll-view >
+  refresher-enabled
+  bindrefresherrefresh
+  refresher-triggered
+  bindscrolltolower
+
+  onPullDownRefresh
+  onReachBottom
+
+  onShareAppMessage
+  open-type="share"
+
+ -->
