@@ -1,0 +1,22 @@
+{
+  "name": "wyyyy_study",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duolai0701/wyyyy_study.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/duolai0701/wyyyy_study/issues"
+  },
+  "homepage": "https://github.com/duolai0701/wyyyy_study#readme",
+  "dependencies": {
+    "pubsub-js": "^1.9.3"
+  }
+}

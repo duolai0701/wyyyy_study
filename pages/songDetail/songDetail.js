@@ -1,4 +1,5 @@
 // pages/songDetail/songDetail.js
+import PubSub from 'pubsub-js'
 import request from '../../utils/request'
 Page({
 
@@ -9,6 +10,7 @@ Page({
     isPlay: true,//音乐是否播放
     song: {},
     musicId: '',
+    musicLink:'',
   },
 
   /**
@@ -21,7 +23,7 @@ Page({
     this.setData({
       musicId: options.musicId
     })
-    this.musicControl(this.data.isPlay, this.data.musicId)
+    this.musicControl(this.data.isPlay, this.data.musicId,this.data.musicLink)
 
     //监听音乐播放/暂停
     this.backgroundAudioManager = wx.getBackgroundAudioManager()
@@ -55,17 +57,41 @@ Page({
     })
   },
   handleMusicPlay () {
-    this.musicControl(!this.data.isPlay, this.data.musicId)
+    this.musicControl(!this.data.isPlay, this.data.musicId,this.data.musicLink)
   },
-  async musicControl (isPlay, musicId) {
+  async musicControl (isPlay, musicId,musicLink) {
     this.backgroundAudioManager = wx.getBackgroundAudioManager()
     if (isPlay) {
-      let musicLinkData = await request('/song/url', { id: musicId })
-      this.backgroundAudioManager.src = musicLinkData.data[0].url
+      if(!musicLink){
+       let musicLinkData =  await request('/song/url', { id: musicId })
+       musicLink = musicLinkData.data[0].url
+       this.setData({
+         musicLink
+       })
+      }
+      
+      this.backgroundAudioManager.src = musicLink
       this.backgroundAudioManager.title = this.data.song.name
     } else {
       this.backgroundAudioManager.pause()
     }
+  },
+  handleSwitch(event){
+    let type = event.currentTarget.id
+    // console.log(type)
+
+    this.backgroundAudioManager.stop()
+
+    PubSub.subscribe('musicId',(msg,musicId)=>{
+      console.log(musicId)
+      
+      this.getSongDetail(musicId)
+      this.musicControl(true,musicId)
+      
+      //取消订阅
+      PubSub.unsubscribe('musicId')
+    })
+    PubSub.publish('switchType',type)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

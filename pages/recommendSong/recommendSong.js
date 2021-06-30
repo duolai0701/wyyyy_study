@@ -1,4 +1,5 @@
 // pages/recommendSong/recommendSong.js
+import PubSub from 'pubsub-js'
 import request from '../../utils/request'
 Page({
 
@@ -8,7 +9,8 @@ Page({
   data: {
     day: '',
     month: '',
-    recommendList: []
+    recommendList: [],
+    index: '',
   },
 
   /**
@@ -34,8 +36,32 @@ Page({
     })
 
     this.getRecommendList()
+
+    //订阅
+    PubSub.subscribe('switchType', (msg, type) => {
+      let { recommendList, index } = this.data
+      if (type === 'pre') {
+        (index === 0) && (index = recommendList.length)
+        index -= 1
+        this.setData({
+          index
+        })
+      } else {
+        (index === recommendList.length-1) && (index = -1)
+        index +=1
+        this.setData({
+          index
+        })
+      }
+      let musicId = recommendList[index].id
+
+      PubSub.publish("musicId",musicId)
+    })
   },
   toSongDetail (event) {
+    this.setData({
+      index:event.currentTarget.dataset.index
+    })
     let song = event.currentTarget.dataset.song
     wx.navigateTo({
       url: '/pages/songDetail/songDetail?musicId=' + song.id

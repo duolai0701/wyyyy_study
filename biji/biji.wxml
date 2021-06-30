@@ -14,5 +14,7 @@
   wx.setNavigationBarTitle
   requiredBackgroundModes
   wx.getBackgroundAudioManager(onPlay,onPause,onStop)
+
+  globalData
   
  -->
