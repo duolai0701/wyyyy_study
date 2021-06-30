@@ -35,10 +35,16 @@ Page({
 
     this.getRecommendList()
   },
+  toSongDetail (event) {
+    let song = event.currentTarget.dataset.song
+    wx.navigateTo({
+      url: '/pages/songDetail/songDetail?musicId=' + song.id
+    })
+  },
   async getRecommendList () {
     let recommendListData = await request('/recommend/songs')
     this.setData({
-      recommendList:recommendListData.recommend
+      recommendList: recommendListData.recommend
     })
   },
   /**

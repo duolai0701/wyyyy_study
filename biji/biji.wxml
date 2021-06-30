@@ -11,4 +11,8 @@
   onShareAppMessage
   open-type="share"
 
+  wx.setNavigationBarTitle
+  requiredBackgroundModes
+  wx.getBackgroundAudioManager(onPlay,onPause,onStop)
+  
  -->
