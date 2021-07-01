@@ -16,5 +16,6 @@
   wx.getBackgroundAudioManager(onPlay,onPause,onStop,onTimeUpdate)
 
   globalData
+  <block><block>
   
  -->
