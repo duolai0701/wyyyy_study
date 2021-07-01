@@ -17,5 +17,8 @@
 
   globalData
   <block><block>
+  flex-wrap:wrap
+  wx.showModal
+  hidden 等同于 v-show
   
  -->
