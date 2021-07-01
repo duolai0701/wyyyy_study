@@ -1,4 +1,5 @@
 // pages/songDetail/songDetail.js
+import moment from 'moment'
 import PubSub from 'pubsub-js'
 import request from '../../utils/request'
 Page({
@@ -11,6 +12,9 @@ Page({
     song: {},
     musicId: '',
     musicLink:'',
+    currentTime:'00:00',
+    durationTime:'00:00',
+    currentWidth:0,
   },
 
   /**
@@ -36,7 +40,20 @@ Page({
     this.backgroundAudioManager.onStop(()=>{
       this.changePlayState(false)
     })
-
+    this.backgroundAudioManager.onTimeUpdate(()=>{
+      let currentWidth = (this.backgroundAudioManager.currentTime / this.backgroundAudioManager.duration) * 450
+      this.setData({
+        currentTime:moment(this.backgroundAudioManager.currentTime * 1000).format('mm:ss'),
+        currentWidth
+      })
+    })
+    this.backgroundAudioManager.onEnded(()=>{
+      PubSub.publish('switchType','next')
+      this.setData({
+        currentWidth:0,
+        currentTime:'00:00'
+      })
+    })
   },
   changePlayState(isPlay){
     this.setData({
@@ -47,9 +64,11 @@ Page({
     let songDetailData = await request('/song/detail', {
       ids: musicId
     })
+    let durationTime = moment(songDetailData.songs[0].dt).format('mm:ss')
     // console.log(songDetailData)
     this.setData({
-      song: songDetailData.songs[0]
+      song: songDetailData.songs[0],
+      durationTime
     })
 
     wx.setNavigationBarTitle({
