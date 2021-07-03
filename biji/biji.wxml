@@ -20,5 +20,8 @@
   flex-wrap:wrap
   wx.showModal
   hidden 等同于 v-show
-  
+
+  wx.login 
+  independent 分包
+  preloadRule  
  -->

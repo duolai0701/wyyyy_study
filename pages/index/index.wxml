@@ -15,7 +15,7 @@
         每日推荐
       </text>
     </view>
-    <view class="navItem">
+    <view class="navItem" bindtap="toOther">
       <text class="iconfont icon-gedan1" selectable="false" space="false" decode="false">
 
       </text>

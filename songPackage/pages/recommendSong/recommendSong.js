@@ -1,6 +1,6 @@
 // pages/recommendSong/recommendSong.js
 import PubSub from 'pubsub-js'
-import request from '../../utils/request'
+import request from '../../../utils/request'
 Page({
 
   /**
@@ -64,7 +64,7 @@ Page({
     })
     let song = event.currentTarget.dataset.song
     wx.navigateTo({
-      url: '/pages/songDetail/songDetail?musicId=' + song.id
+      url: '/songPackage/pages/songDetail/songDetail?musicId=' + song.id
     })
   },
   async getRecommendList () {
